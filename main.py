@@ -14,7 +14,6 @@ from docx import Document
 from docx.enum.text import WD_ALIGN_PARAGRAPH
 nltk.download('punkt')
 nltk.download('stopwords')
-import jvm
 
 # PAGE CONFIGURATION
 st.set_page_config(
