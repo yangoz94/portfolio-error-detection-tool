@@ -6,13 +6,13 @@ import nltk.tokenize.punkt
 import string
 from nltk.probability import FreqDist
 from nltk.corpus import stopwords
-nltk.download('punkt')
 import language_tool_python
 import functools as ft
 import docx2txt
 import pdfplumber
 from docx import Document
 from docx.enum.text import WD_ALIGN_PARAGRAPH
+import numpy
 
 # PAGE CONFIGURATION
 st.set_page_config(
