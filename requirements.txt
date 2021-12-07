@@ -7,3 +7,4 @@ pdfplumber==0.5.28
 python_docx==0.8.11
 requests==2.26.0
 streamlit==1.2.0
+cffi==1.15.0
