@@ -15,8 +15,7 @@ from docx.enum.text import WD_ALIGN_PARAGRAPH
 nltk.download('punkt')
 nltk.download('stopwords')
 import jdk
-jdk.install('11', impl=jdk.Implementation.OPENJ9)
-download_url = jdk.get_download_url('11')
+jdk.install('11')
 
 # PAGE CONFIGURATION
 st.set_page_config(
