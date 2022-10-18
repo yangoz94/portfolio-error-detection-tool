@@ -128,6 +128,7 @@ def get_top10_words():
         freqlist.append(freq)
     data = {"Word": wordlist, "Frequency": freqlist}
     chart_data = pd.DataFrame(data)
+    chart_data.index = range(1, len(chart_data) + 1)  # Sets the starting index to 1 instead of 0
 
     return st.subheader("Word Frequency Table Excluding Stopwords"), \
            st.dataframe(chart_data), \
@@ -255,7 +256,6 @@ def get_locally_corrected_text():
     """
     This function returns automatically-corrected version of the input text.
     """
-    display_stats()
     correctedText = cache_tool().correct(st.session_state["-TEXT-"])
     st.session_state["-TEXTOUTPUT-"] = correctedText
     create_output_layout()
@@ -338,24 +338,31 @@ uploaded_file = st.file_uploader("Upload a file (Optional)", key="-FILE-",
                                  help="Please choose a file from your computer to upload a text.",
                                  type=["doc", "docx", "pdf"])
 
-col1, col2, col3, col4 = st.columns([0.7, 3.5, 3, 1])
+col1, col2, col3, col4 = st.columns([0.8, 3.5, 3, 1])
 
 with col1:
     readB = st.button("Read File", on_click=read_file)
     clearB = st.button("Clear All", on_click=clear_input)
     ballonB = st.button("Balloons", on_click=st.balloons)
 
+
 with col2:
     st.caption(
-            'If you uploaded a file, click this button to copy and paste the content of your file to the box above.')
-    st.caption('It erases all the input and output. <br>File itself and the sidebar will NOT be affected.', unsafe_allow_html=True)
+        'If you uploaded a file, click this button to copy and paste the content of your file to the box above.')
+    st.caption("") # For alignment
+    st.caption('It erases all the input and output.File itself and the sidebar will NOT be affected.')
+    st.caption("") # For alignment
     st.caption('Do you love balloons? If yes, go ahead!')
 
 with col3:
     st.caption(
-        'It checks the text for errors online in sentence-level. It is faster than local processing. Internet connection required.')
-    st.caption('It checks the text for errors locally in word-level and inserts error messages; it might be slower than "Check Online.')
-    st.caption('It corrects the text online through an API and outputs the corrected version of the input. It might take a while.')
+        'It checks the text for errors online in sentence-level.  Internet connection required.')
+    st.caption("") # For alignment
+    st.caption(
+        'It checks the text for errors locally in word-level and inserts error messages.')
+    st.caption("") # For alignment
+    st.caption(
+        'It corrects the text online through an API and displays the output')
 with col4:
     apiB = st.button("Check Online", on_click=check_input)
     localB = st.button("Check Locally", on_click=check_input)
@@ -388,6 +395,7 @@ calculateB = st.sidebar.button("Calculate Total", on_click=get_total, key="-CALC
 resetB = st.sidebar.button("Clear All Scores", on_click=reset_scores, key="-RESETSCORES-")
 st.sidebar.number_input("Total (100 pts)", key="-TOTALSCORE-", min_value=0, max_value=100, )
 
+
 # EVENTS
 if resetB:
     st.sidebar.success("All scores have succesfully been reset!")
@@ -403,28 +411,4 @@ elif localB or apiB or localCorrectB:
         elif localCorrectB:
             get_locally_corrected_text()
 
-
-#column stylings that are not supported as built-in by streamlit=
-st.markdown("""
-    <style>
-        [data-testid=column]:nth-of-type(1) [data-testid=stVerticalBlock]   {
-            gap: 1.75rem;
-        }
-    </style>
-    """, unsafe_allow_html=True)
-
-st.markdown("""
-    <style>
-        [data-testid=column]:nth-of-type(2) [data-testid=stVerticalBlock]   {
-            gap: 2.25rem;
-        }
-    </style>
-    """, unsafe_allow_html=True)
-
-st.markdown("""
-    <style>
-        [data-testid=column]:nth-of-type(4) [data-testid=stVerticalBlock]   {
-            gap: 1.75rem;
-        }
-    </style>
-    """, unsafe_allow_html=True)
+# Column styling not supported by streamlit built-in methods
