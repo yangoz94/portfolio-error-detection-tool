@@ -3,9 +3,9 @@ import streamlit as st
 import requests
 import nltk
 import nltk.tokenize.punkt
-import string
 from nltk.probability import FreqDist
 from nltk.corpus import stopwords
+from string import punctuation, digits
 import language_tool_python
 import functools as ft
 import docx2txt
@@ -37,7 +37,7 @@ st.set_page_config(
 
 # VARIABLES
 items_string = ["-ORGANISATION-", "-TASKCONTENT-", "-GRAMMAR-", "-VOCABULARY-"]
-punctuation = string.punctuation.replace("-", "") + '““' + "’" + string.digits
+punctuation = punctuation.replace("-", "") + '““' + "’" + digits
 is_bad_rule = ["Use a third-person plural verb with ‘they’.",
                "Use a comma before ‘and’ if it connects two independent clauses (unless they are closely connected and short)."]
 
@@ -353,9 +353,8 @@ with col2:
 
 with col3:
     st.caption(
-        'It checks the text for errors locally in word-level and inserts error messages; it might be slower than "Check Online.')
-    st.caption(
-        'It corrects the text online through an API and outputs the corrected version of the input. It might take a while to finish processing.')
+        'It checks the text for errors online in sentence-level. It is faster than local processing. Internet connection required.')
+    st.caption('It checks the text for errors locally in word-level and inserts error messages; it might be slower than "Check Online.')
     st.caption('It corrects the text online through an API and outputs the corrected version of the input. It might take a while.')
 with col4:
     apiB = st.button("Check Online", on_click=check_input)
@@ -405,10 +404,7 @@ elif localB or apiB or localCorrectB:
             get_locally_corrected_text()
 
 
-
-
-#column stylings that are not supported as built-in by streamlit
-
+#column stylings that are not supported as built-in by streamlit=
 st.markdown("""
     <style>
         [data-testid=column]:nth-of-type(1) [data-testid=stVerticalBlock]   {
